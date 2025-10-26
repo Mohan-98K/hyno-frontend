@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { ToastProvider } from './contexts/ToastContext';
 import { CartProvider } from './contexts/CartContext';
 import { AuthProvider } from './contexts/AuthContext';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import SideNav from './components/SideNav';
 import Home from './components/Home';
 import Products from './components/Products';
@@ -30,6 +32,7 @@ function App() {
         <ToastProvider>
           <Router>
             <div className="App">
+              <Header />
               <SideNav />
               <motion.main
                 className="main-content"
@@ -56,6 +59,7 @@ function App() {
                   <Route path="/about" element={<About />} />
                 </Routes>
               </motion.main>
+              <Footer />
             </div>
           </Router>
         </ToastProvider>

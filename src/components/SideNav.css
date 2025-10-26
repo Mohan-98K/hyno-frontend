@@ -1,10 +1,10 @@
 /* SideNav.css */
 .sidenav {
   position: fixed;
-  top: 0;
+  top: 80px; /* Account for fixed header */
   left: 0;
   width: 280px;
-  height: 100vh;
+  height: calc(100vh - 160px); /* Adjust height for header and footer */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 20px 0;
@@ -114,7 +114,7 @@
 .mobile-menu-btn {
   display: none;
   position: fixed;
-  top: 20px;
+  top: 90px; /* Adjusted for header */
   left: 20px;
   z-index: 1001;
   background: #667eea;
@@ -126,6 +126,10 @@
   font-size: 1.2rem;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-menu-btn.hidden {
+  display: none;
 }
 
 .sidenav-overlay {

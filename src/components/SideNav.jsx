@@ -66,7 +66,7 @@ const SideNav = () => {
     <>
       {/* Mobile Menu Button */}
       <motion.button
-        className="mobile-menu-btn"
+        className={`mobile-menu-btn ${isOpen ? 'hidden' : ''}`}
         onClick={toggleNav}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
