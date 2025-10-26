@@ -28,7 +28,13 @@ const Category = ({ categoryName = 'All Medicines' }) => {
         discount: 25,
         image: 'https://via.placeholder.com/300x300/667eea/ffffff?text=Paracetamol',
         category: 'pain-relief',
-        description: 'Effective pain relief and fever reducer'
+        description: 'Effective pain relief and fever reducer',
+        dosage: '500mg',
+        form: 'Tablet',
+        quantity: '30 tablets',
+        inStock: true,
+        prescriptionRequired: false,
+        isWishlisted: false
       },
       {
         id: 2,
@@ -43,7 +49,13 @@ const Category = ({ categoryName = 'All Medicines' }) => {
         discount: 0,
         image: 'https://via.placeholder.com/300x300/27ae60/ffffff?text=Ibuprofen',
         category: 'pain-relief',
-        description: 'Anti-inflammatory pain relief medication'
+        description: 'Anti-inflammatory pain relief medication',
+        dosage: '200mg',
+        form: 'Tablet',
+        quantity: '20 tablets',
+        inStock: false,
+        prescriptionRequired: false,
+        isWishlisted: false
       },
       {
         id: 3,
@@ -58,7 +70,13 @@ const Category = ({ categoryName = 'All Medicines' }) => {
         discount: 19,
         image: 'https://via.placeholder.com/300x300/e74c3c/ffffff?text=Amoxicillin',
         category: 'antibiotics',
-        description: 'Antibiotic for bacterial infections'
+        description: 'Antibiotic for bacterial infections',
+        dosage: '500mg',
+        form: 'Capsule',
+        quantity: '21 capsules',
+        inStock: true,
+        prescriptionRequired: true,
+        isWishlisted: false
       },
       {
         id: 4,
@@ -73,7 +91,13 @@ const Category = ({ categoryName = 'All Medicines' }) => {
         discount: 0,
         image: 'https://via.placeholder.com/300x300/f39c12/ffffff?text=Vitamin+D3',
         category: 'vitamins',
-        description: 'Essential vitamin for bone health'
+        description: 'Essential vitamin for bone health',
+        dosage: '1000IU',
+        form: 'Softgel',
+        quantity: '90 softgels',
+        inStock: true,
+        prescriptionRequired: false,
+        isWishlisted: false
       },
       {
         id: 5,
@@ -88,7 +112,13 @@ const Category = ({ categoryName = 'All Medicines' }) => {
         discount: 23,
         image: 'https://via.placeholder.com/300x300/9b59b6/ffffff?text=Omeprazole',
         category: 'digestive',
-        description: 'Acid reflux and heartburn relief'
+        description: 'Acid reflux and heartburn relief',
+        dosage: '20mg',
+        form: 'Capsule',
+        quantity: '28 capsules',
+        inStock: true,
+        prescriptionRequired: false,
+        isWishlisted: false
       },
       {
         id: 6,
@@ -103,7 +133,13 @@ const Category = ({ categoryName = 'All Medicines' }) => {
         discount: 0,
         image: 'https://via.placeholder.com/300x300/1abc9c/ffffff?text=Cetirizine',
         category: 'allergy',
-        description: '24-hour allergy relief'
+        description: '24-hour allergy relief',
+        dosage: '10mg',
+        form: 'Tablet',
+        quantity: '30 tablets',
+        inStock: true,
+        prescriptionRequired: false,
+        isWishlisted: false
       }
     ];
 

@@ -6,6 +6,10 @@ import './Medicine.css';
 const Medicine = ({ medicine, onAddToCart, onToggleWishlist }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  if (!medicine) {
+    return <div className="medicine-card">Medicine data not available</div>;
+  }
+
   const handleAddToCart = () => {
     onAddToCart(medicine);
   };
@@ -32,7 +36,7 @@ const Medicine = ({ medicine, onAddToCart, onToggleWishlist }) => {
       whileHover={{ y: -5 }}
     >
       <div className="medicine-image">
-        <img src={medicine.image} alt={medicine.name} />
+        <img src={medicine.image || 'https://via.placeholder.com/300x300?text=No+Image'} alt={medicine.name} />
         {medicine.prescriptionRequired && (
           <div className="prescription-badge">Rx Required</div>
         )}
