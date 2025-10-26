@@ -94,7 +94,7 @@ const SideNav = () => {
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
         <div className="sidenav-header">
-          <h2>Hypno Pharmacy</h2>
+          <h2>Hyno Pharmacy</h2>
         </div>
 
         <ul className="sidenav-menu">
@@ -115,7 +115,6 @@ const SideNav = () => {
                   onClick={() => setOpenDropdown(!openDropdown)}
                 >
                   <Icon className="sidenav-icon" />
-                  <span className="sidenav-label">{item.label}</span>
                   {openDropdown ? <FaChevronUp className="dropdown-icon" /> : <FaChevronDown className="dropdown-icon" />}
                 </div>
                 <AnimatePresence>
@@ -163,7 +162,6 @@ const SideNav = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
         >
-          <p>&copy; 2024 Hypno Pharmacy</p>
         </motion.div>
       </motion.nav>
     </>

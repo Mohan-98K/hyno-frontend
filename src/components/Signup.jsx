@@ -262,29 +262,7 @@ const Signup = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.6 }}
       >
-        <h2>Why Choose Hypno Pharmacy?</h2>
-        <div className="features-list">
-          <div className="feature">
-            <div className="feature-icon">🚚</div>
-            <h3>Free Delivery</h3>
-            <p>On orders over $50</p>
-          </div>
-          <div className="feature">
-            <div className="feature-icon">💊</div>
-            <h3>Authentic Medicines</h3>
-            <p>100% genuine products</p>
-          </div>
-          <div className="feature">
-            <div className="feature-icon">👨‍⚕️</div>
-            <h3>Expert Consultation</h3>
-            <p>24/7 pharmacist support</p>
-          </div>
-          <div className="feature">
-            <div className="feature-icon">🔒</div>
-            <h3>Secure & Private</h3>
-            <p>Your health data is protected</p>
-          </div>
-        </div>
+       
       </motion.div>
     </motion.div>
   );

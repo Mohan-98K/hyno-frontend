@@ -9,7 +9,7 @@ const Header = () => {
       <div className="header-container">
         <div className="header-left">
           <Link to="/" className="logo">
-            <h1>HynoPharmacy</h1>
+            <h1>Hyno Pharmacy</h1>
           </Link>
         </div>
 
