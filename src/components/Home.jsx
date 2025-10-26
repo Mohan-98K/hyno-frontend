@@ -1,9 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaPills, FaUserMd, FaClock, FaStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
+import { useToast } from '../contexts/ToastContext';
 import './Home.css';
 
 const Home = () => {
+  const { addToCart } = useCart();
+  const { showSuccess } = useToast();
+
   const featuredMedicines = [
     { id: 1, name: 'Paracetamol', price: 5.99, image: 'https://via.placeholder.com/150' },
     { id: 2, name: 'Ibuprofen', price: 7.49, image: 'https://via.placeholder.com/150' },
@@ -17,6 +23,17 @@ const Home = () => {
     { icon: FaClock, title: '24/7 Service', description: 'Round the clock delivery' },
     { icon: FaStar, title: 'Quality Assured', description: 'FDA approved medicines only' },
   ];
+
+  const handleAddToCart = (medicine) => {
+    addToCart(medicine);
+    showSuccess(`${medicine.name} added to cart successfully!`);
+  };
+
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    showSuccess('Thank you for subscribing to our newsletter!');
+    e.target.reset();
+  };
 
   return (
     <motion.div
@@ -33,15 +50,17 @@ const Home = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="hero-content">
-          <h1>Welcome to Hypno Pharmacy</h1>
+          <h1>Welcome to Hyno Pharma</h1>
           <p>Your trusted online pharmacy for all your health needs</p>
-          <motion.button
-            className="btn btn-primary"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Shop Now
-          </motion.button>
+          <Link to="/products">
+            <motion.button
+              className="btn btn-primary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Shop Now
+            </motion.button>
+          </Link>
         </div>
       </motion.section>
 
@@ -81,8 +100,15 @@ const Home = () => {
             >
               <img src={medicine.image} alt={medicine.name} />
               <h3>{medicine.name}</h3>
-              <p className="price">${medicine.price}</p>
-              <button className="btn btn-primary">Add to Cart</button>
+              <p className="price">₹{medicine.price}</p>
+              <motion.button
+                className="btn btn-primary"
+                onClick={() => handleAddToCart(medicine)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Add to Cart
+              </motion.button>
             </motion.div>
           ))}
         </div>
@@ -125,7 +151,7 @@ const Home = () => {
         <div className="card">
           <h2>Stay Updated</h2>
           <p>Subscribe to our newsletter for health tips and exclusive offers</p>
-          <form className="newsletter-form">
+          <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
             <input type="email" placeholder="Enter your email" required />
             <button type="submit" className="btn btn-primary">Subscribe</button>
           </form>

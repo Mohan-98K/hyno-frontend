@@ -57,9 +57,9 @@ const Medicine = ({ medicine, onAddToCart, onToggleWishlist }) => {
         </div>
 
         <div className="medicine-price">
-          <span className="current-price">${medicine.price.toFixed(2)}</span>
+          <span className="current-price">₹{medicine.price.toFixed(2)}</span>
           {medicine.originalPrice && (
-            <span className="original-price">${medicine.originalPrice.toFixed(2)}</span>
+            <span className="original-price">₹{medicine.originalPrice.toFixed(2)}</span>
           )}
         </div>
 

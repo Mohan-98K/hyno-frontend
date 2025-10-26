@@ -86,7 +86,7 @@ const Admin = () => {
             <FaChartLine />
           </div>
           <div className="stat-info">
-            <h3>${stats.totalRevenue?.toFixed(2)}</h3>
+            <h3>₹{stats.totalRevenue?.toFixed(2)}</h3>
             <p>Total Revenue</p>
           </div>
         </motion.div>
@@ -239,7 +239,7 @@ const Admin = () => {
               >
                 <td>{order.id}</td>
                 <td>{order.customer}</td>
-                <td>${order.total}</td>
+                <td>₹{order.total}</td>
                 <td>
                   <span className={`status ${order.status}`}>
                     {order.status}
@@ -299,7 +299,7 @@ const Admin = () => {
                 <td>{medicine.id}</td>
                 <td>{medicine.name}</td>
                 <td>{medicine.stock}</td>
-                <td>${medicine.price}</td>
+                <td>₹{medicine.price}</td>
                 <td>
                   <span className={`status ${medicine.status}`}>
                     {medicine.status.replace('-', ' ')}

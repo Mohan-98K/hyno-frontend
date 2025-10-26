@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaUser, FaLock, FaEye, FaEyeSlash, FaGoogle, FaFacebook } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import './Login.css';
+import { FaUser, FaLock, FaEye, FaEyeSlash, FaGoogle, FaFacebook, FaUserPlus } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
+import './Signup.css';
 
-const Login = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const { signup } = useAuth();
+  const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,51 +28,119 @@ const Login = () => {
       ...prev,
       [name]: value
     }));
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password';
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      await signup({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
+      });
+
+      showToast('Account created successfully!', 'success');
+      navigate('/');
+    } catch (error) {
+      showToast(error.message || 'Signup failed. Please try again.', 'error');
+    } finally {
       setIsLoading(false);
-      alert('Login successful! (This is a demo)');
-    }, 2000);
+    }
   };
 
   const handleSocialLogin = (provider) => {
-    alert(`${provider} login would be implemented here`);
+    alert(`${provider} signup would be implemented here`);
   };
 
   return (
     <motion.div
-      className="login-container"
+      className="signup-container"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="login-card">
+      <div className="signup-card">
         <motion.div
-          className="login-header"
+          className="signup-header"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
           <div className="logo">
-            <FaUser className="logo-icon" />
+            <FaUserPlus className="logo-icon" />
           </div>
-          <h1>Welcome Back</h1>
-          <p>Sign in to your Hypno Pharmacy account</p>
+          <h1>Join Hypno Pharmacy</h1>
+          <p>Create your account to get started</p>
         </motion.div>
 
         <motion.form
-          className="login-form"
+          className="signup-form"
           onSubmit={handleSubmit}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
+          <div className="form-group">
+            <label htmlFor="name">Full Name</label>
+            <div className="input-group">
+              <FaUser className="input-icon" />
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+            {errors.name && <span className="error-message">{errors.name}</span>}
+          </div>
+
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <div className="input-group">
@@ -78,6 +155,7 @@ const Login = () => {
                 required
               />
             </div>
+            {errors.email && <span className="error-message">{errors.email}</span>}
           </div>
 
           <div className="form-group">
@@ -90,7 +168,7 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                placeholder="Enter your password"
+                placeholder="Create a password"
                 required
               />
               <button
@@ -101,31 +179,41 @@ const Login = () => {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+            {errors.password && <span className="error-message">{errors.password}</span>}
           </div>
 
-          <div className="form-options">
-            <label className="checkbox-label">
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <div className="input-group">
+              <FaLock className="input-icon" />
               <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
+                type={showConfirmPassword ? 'text' : 'password'}
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                placeholder="Confirm your password"
+                required
               />
-              <span className="checkmark"></span>
-              Remember me
-            </label>
-            <Link to="/forgot-password" className="forgot-password">
-              Forgot Password?
-            </Link>
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
           </div>
 
           <motion.button
             type="submit"
-            className="btn btn-primary login-btn"
+            className="btn btn-primary signup-btn"
             disabled={isLoading}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {isLoading ? 'Signing In...' : 'Sign In'}
+            {isLoading ? 'Creating Account...' : 'Create Account'}
           </motion.button>
         </motion.form>
 
@@ -148,28 +236,28 @@ const Login = () => {
             className="btn btn-google"
             onClick={() => handleSocialLogin('Google')}
           >
-            <FaGoogle /> Continue with Google
+            <FaGoogle /> Sign up with Google
           </button>
           <button
             className="btn btn-facebook"
             onClick={() => handleSocialLogin('Facebook')}
           >
-            <FaFacebook /> Continue with Facebook
+            <FaFacebook /> Sign up with Facebook
           </button>
         </motion.div>
 
         <motion.div
-          className="signup-link"
+          className="login-link"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
+          <p>Already have an account? <Link to="/login">Sign in here</Link></p>
         </motion.div>
       </div>
 
       <motion.div
-        className="login-features"
+        className="signup-features"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.6 }}
@@ -179,7 +267,7 @@ const Login = () => {
           <div className="feature">
             <div className="feature-icon">🚚</div>
             <h3>Free Delivery</h3>
-            <p>On orders over ₹50</p>
+            <p>On orders over $50</p>
           </div>
           <div className="feature">
             <div className="feature-icon">💊</div>
@@ -202,4 +290,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

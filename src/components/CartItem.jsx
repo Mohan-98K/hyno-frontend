@@ -28,7 +28,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
 
       <div className="item-details">
         <h3 className="item-name">{item.name}</h3>
-        <p className="item-price">${item.price.toFixed(2)} each</p>
+        <p className="item-price">₹{item.price.toFixed(2)} each</p>
         {item.prescription && (
           <p className="prescription-required">Prescription Required</p>
         )}
@@ -56,7 +56,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
       </div>
 
       <div className="item-total">
-        <p className="total-price">${(item.price * item.quantity).toFixed(2)}</p>
+        <p className="total-price">₹{(item.price * item.quantity).toFixed(2)}</p>
       </div>
 
       <motion.button

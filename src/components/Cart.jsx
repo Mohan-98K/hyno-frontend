@@ -132,24 +132,24 @@ const Cart = () => {
 
               <div className="summary-row">
                 <span>Subtotal ({cartItems.length} items)</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>₹{subtotal.toFixed(2)}</span>
               </div>
 
               {discount > 0 && (
                 <div className="summary-row discount">
                   <span>Discount ({discount}%)</span>
-                  <span>-${discountAmount.toFixed(2)}</span>
+                  <span>-₹{discountAmount.toFixed(2)}</span>
                 </div>
               )}
 
               <div className="summary-row">
                 <span>Tax</span>
-                <span>${tax.toFixed(2)}</span>
+                <span>₹{tax.toFixed(2)}</span>
               </div>
 
               <div className="summary-row total">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>₹{total.toFixed(2)}</span>
               </div>
 
               <div className="promo-code">
@@ -180,7 +180,7 @@ const Cart = () => {
                   </div>
                 )}
                 <div className="notice shipping-notice">
-                  <strong>Free Shipping</strong> on orders over $50
+                  <strong>Free Shipping</strong> on orders over ₹50
                 </div>
               </div>
             </div>

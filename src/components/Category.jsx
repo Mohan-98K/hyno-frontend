@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaFilter, FaSort, FaSearch, FaHeart, FaShoppingCart } from 'react-icons/fa';
+import { useToast } from '../contexts/ToastContext';
 import Medicine from './Medicine';
 import './Category.css';
 
 const Category = ({ categoryName = 'All Medicines' }) => {
+  const { showSuccess, showError } = useToast();
   const [medicines, setMedicines] = useState([]);
   const [filteredMedicines, setFilteredMedicines] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -190,6 +192,18 @@ const Category = ({ categoryName = 'All Medicines' }) => {
     { value: 'rating', label: 'Highest Rated' }
   ];
 
+  const addToCart = (medicine) => {
+    // In real app, this would dispatch to cart context/store
+    showSuccess(`${medicine.name} added to cart successfully!`);
+  };
+
+  const toggleWishlist = (medicineId) => {
+    // In real app, this would toggle wishlist
+    const medicine = medicines.find(m => m.id === medicineId);
+    const isWishlisted = medicine.isWishlisted || false;
+    showSuccess(`${medicine.name} ${isWishlisted ? 'removed from' : 'added to'} wishlist!`);
+  };
+
   return (
     <motion.div
       className="category-page"
@@ -311,7 +325,11 @@ const Category = ({ categoryName = 'All Medicines' }) => {
               transition={{ delay: index * 0.1 }}
               layout
             >
-              <Medicine medicine={medicine} />
+              <Medicine
+                medicine={medicine}
+                onAddToCart={addToCart}
+                onToggleWishlist={toggleWishlist}
+              />
             </motion.div>
           ))}
         </motion.div>

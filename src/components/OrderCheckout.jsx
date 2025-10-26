@@ -294,9 +294,9 @@ const OrderCheckout = () => {
             <img src={item.image} alt={item.name} />
             <div>
               <h5>{item.name}</h5>
-              <p>Qty: {item.quantity} × ${item.price.toFixed(2)}</p>
+              <p>Qty: {item.quantity} × ₹{item.price.toFixed(2)}</p>
             </div>
-            <span>${(item.price * item.quantity).toFixed(2)}</span>
+            <span>₹{(item.price * item.quantity).toFixed(2)}</span>
           </div>
         ))}
       </div>
@@ -389,7 +389,7 @@ const OrderCheckout = () => {
                   <h4>{item.name}</h4>
                   <p>Qty: {item.quantity}</p>
                 </div>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
+                <span>₹{(item.price * item.quantity).toFixed(2)}</span>
               </div>
             ))}
           </div>
@@ -397,25 +397,25 @@ const OrderCheckout = () => {
           <div className="summary-totals">
             <div className="summary-row">
               <span>Subtotal</span>
-              <span>${calculateSubtotal().toFixed(2)}</span>
+              <span>₹{calculateSubtotal().toFixed(2)}</span>
             </div>
             <div className="summary-row">
               <span>Tax</span>
-              <span>${calculateTax().toFixed(2)}</span>
+              <span>₹{calculateTax().toFixed(2)}</span>
             </div>
             <div className="summary-row">
               <span>Shipping</span>
-              <span>{calculateShipping() === 0 ? 'Free' : `$${calculateShipping().toFixed(2)}`}</span>
+            <span>{calculateShipping() === 0 ? 'Free' : `₹${calculateShipping().toFixed(2)}`}</span>
             </div>
             <div className="summary-row total">
               <span>Total</span>
-              <span>${calculateTotal().toFixed(2)}</span>
+              <span>₹{calculateTotal().toFixed(2)}</span>
             </div>
           </div>
 
           <div className="shipping-info">
             <FaTruck />
-            <span>Free shipping on orders over $50</span>
+            <span>Free shipping on orders over ₹50</span>
           </div>
         </div>
       </div>

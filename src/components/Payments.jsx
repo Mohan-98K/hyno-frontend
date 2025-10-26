@@ -68,7 +68,7 @@ const Payments = () => {
   };
 
   const formatAmount = (amount) => {
-    return amount > 0 ? `+$${amount.toFixed(2)}` : `-$${Math.abs(amount).toFixed(2)}`;
+    return amount > 0 ? `+₹${amount.toFixed(2)}` : `-₹${Math.abs(amount).toFixed(2)}`;
   };
 
   return (
@@ -241,11 +241,11 @@ const Payments = () => {
             <p>Payment Methods</p>
           </div>
           <div className="summary-card">
-            <h3>${transactions.filter(t => t.amount < 0).reduce((sum, t) => sum + Math.abs(t.amount), 0).toFixed(2)}</h3>
+            <h3>₹{transactions.filter(t => t.amount < 0).reduce((sum, t) => sum + Math.abs(t.amount), 0).toFixed(2)}</h3>
             <p>Total Spent</p>
           </div>
           <div className="summary-card">
-            <h3>${transactions.filter(t => t.amount > 0).reduce((sum, t) => sum + t.amount, 0).toFixed(2)}</h3>
+            <h3>₹{transactions.filter(t => t.amount > 0).reduce((sum, t) => sum + t.amount, 0).toFixed(2)}</h3>
             <p>Total Refunds</p>
           </div>
           <div className="summary-card">

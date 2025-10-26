@@ -155,14 +155,14 @@ const Orders = () => {
                 <div key={itemIndex} className="order-item">
                   <span className="item-name">{item.name}</span>
                   <span className="item-quantity">Qty: {item.quantity}</span>
-                  <span className="item-price">${item.price}</span>
+                  <span className="item-price">₹{item.price}</span>
                 </div>
               ))}
             </div>
 
             <div className="order-footer">
               <div className="order-total">
-                <strong>Total: ${order.total}</strong>
+                <strong>Total: ₹{order.total}</strong>
               </div>
               <div className="order-actions">
                 <motion.button
@@ -217,7 +217,7 @@ const Orders = () => {
             <p>Delivered</p>
           </div>
           <div className="stat">
-            <h3>${orders.reduce((sum, order) => sum + order.total, 0).toFixed(2)}</h3>
+            <h3>₹{orders.reduce((sum, order) => sum + order.total, 0).toFixed(2)}</h3>
             <p>Total Spent</p>
           </div>
           <div className="stat">

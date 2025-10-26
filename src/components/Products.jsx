@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSearch, FaFilter, FaShoppingCart, FaHeart } from 'react-icons/fa';
 import { useToast } from '../contexts/ToastContext';
+import { useCart } from '../contexts/CartContext';
 import { ProductsGridSkeleton, LoadingSpinner } from './LoadingSkeleton';
 import './Products.css';
 
 const Products = () => {
   const { showSuccess, showError } = useToast();
+  const { addToCart, toggleWishlist, isInWishlist } = useCart();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -56,14 +58,14 @@ const Products = () => {
     setFilteredProducts(filtered);
   }, [searchTerm, selectedCategory, sortBy, products]);
 
-  const addToCart = (product) => {
-    // In real app, this would dispatch to cart context/store
+  const handleAddToCart = (product) => {
+    addToCart(product);
     showSuccess(`${product.name} added to cart successfully!`);
   };
 
-  const toggleWishlist = (product) => {
-    // In real app, this would toggle wishlist
-    const isWishlisted = product.wishlisted || false;
+  const handleToggleWishlist = (product) => {
+    toggleWishlist(product);
+    const isWishlisted = isInWishlist(product.id);
     showSuccess(`${product.name} ${isWishlisted ? 'removed from' : 'added to'} wishlist!`);
   };
 
@@ -134,8 +136,8 @@ const Products = () => {
               <div className="product-image">
                 <img src={product.image} alt={product.name} />
                 <button
-                  className="wishlist-btn"
-                  onClick={() => toggleWishlist(product)}
+                  className={`wishlist-btn ${isInWishlist(product.id) ? 'active' : ''}`}
+                  onClick={() => handleToggleWishlist(product)}
                 >
                   <FaHeart />
                 </button>
@@ -148,13 +150,13 @@ const Products = () => {
                   {'★'.repeat(Math.floor(product.rating))}{'☆'.repeat(5 - Math.floor(product.rating))}
                   <span>({product.rating})</span>
                 </div>
-                <p className="product-price">${product.price}</p>
+                <p className="product-price">₹{product.price}</p>
                 <p className="product-category">{product.category}</p>
               </div>
 
               <motion.button
                 className={`btn ${product.inStock ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => product.inStock && addToCart(product)}
+                onClick={() => product.inStock && handleAddToCart(product)}
                 disabled={!product.inStock}
                 whileHover={product.inStock ? { scale: 1.05 } : {}}
                 whileTap={product.inStock ? { scale: 0.95 } : {}}
